@@ -7,5 +7,5 @@ const studentRouter=express.Router();
 studentRouter.post('/enroll',authenticateUser, roleBasedAccess(['student']),StudentController.enroll);
 studentRouter.get('/getenrolled/:id',authenticateUser, roleBasedAccess(['student']), StudentController.getEnrolledCourses)
 studentRouter.get('/getresult/:id',authenticateUser, roleBasedAccess(['student']), StudentController.getStudentResult)
-studentRouter.get('/getpaylist/:id', authenticateUser, roleBasedAccess(['student']), StudentController.getStudentResult)
+studentRouter.get('/getpaylist/:id', authenticateUser, roleBasedAccess(['student']), StudentController.getPaymentsByUserId)
 export default studentRouter;

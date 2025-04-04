@@ -14,6 +14,7 @@ const typeorm_1 = require("typeorm");
 const enrollment_1 = require("./enrollment");
 const payment_1 = require("./payment");
 const result_1 = require("./result");
+const course_1 = require("./course");
 let User = class User {
 };
 exports.User = User;
@@ -49,6 +50,10 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => result_1.Result, (result) => result.user, { cascade: true }),
     __metadata("design:type", Array)
 ], User.prototype, "results", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => course_1.Course, (course) => course.user, { cascade: true }),
+    __metadata("design:type", course_1.Course)
+], User.prototype, "course", void 0);
 exports.User = User = __decorate([
     (0, typeorm_1.Entity)("USER_LMS")
 ], User);

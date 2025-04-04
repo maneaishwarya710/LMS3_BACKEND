@@ -76,6 +76,7 @@ class StudentService {
     }
     static getPaymentsByUserId(userId) {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log(" in service", userId);
             const payments = yield payment_repository_1.PaymentRepository.find({
                 where: { user: { userId } },
                 relations: ['user']

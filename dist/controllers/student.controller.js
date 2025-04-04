@@ -41,8 +41,8 @@ class StudentController {
     static getStudentResult(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const userId = req.params.id; // Assuming user ID is available in the request object
-                const studentResults = yield student_service_1.StudentService.getStudentResults(+userId);
+                const userId = Number(req.params.id); // Assuming user ID is available in the request object
+                const studentResults = yield student_service_1.StudentService.getStudentResults(userId);
                 res.status(200).json({ studentResults });
             }
             catch (error) {
@@ -54,15 +54,16 @@ class StudentController {
     static getPaymentsByUserId(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const userId = parseInt(req.params.userId, 10);
+                const userId = Number(req.params.id);
                 if (isNaN(userId)) {
-                    return res.status(400).json({ error: "Invalid user ID" });
+                    res.status(400).json({ error: "Invalid user ID" });
                 }
+                console.log("userId in con", userId);
                 const payments = yield student_service_1.StudentService.getPaymentsByUserId(userId);
                 res.status(200).json({ payments });
             }
             catch (error) {
-                console.error("Error fetching payments:", error);
+                console.error("Error fetching payments:", error.message);
                 res.status(400).json({ error: "Unable to fetch payments" });
             }
         });

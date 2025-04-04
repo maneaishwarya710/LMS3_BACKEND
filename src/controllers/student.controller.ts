@@ -5,6 +5,7 @@ import { validate } from "class-validator";
 import { EnrollmentDTO } from "../dto/enrollment.dto";
 import { ResultRepository } from "../repositories/result.repository";
 import { ResultDTO } from "../dto/result.dto";
+import { log } from "console";
 export class StudentController {
     static async enroll(req: Request, res: Response) {
         try {
@@ -30,8 +31,8 @@ export class StudentController {
 
     static async getStudentResult(req: Request, res: Response) {
         try {
-            const userId = req.params.id; // Assuming user ID is available in the request object
-            const studentResults = await StudentService.getStudentResults(+userId);
+            const userId = Number(req.params.id); // Assuming user ID is available in the request object
+            const studentResults = await StudentService.getStudentResults(userId);
             res.status(200).json({ studentResults });
         } catch (error) {
             console.error("Error fetching student results:", error);
@@ -41,16 +42,17 @@ export class StudentController {
 
     static async getPaymentsByUserId(req: Request, res: Response) {
         try {
-            const userId = parseInt(req.params.userId, 10);
+            const userId = Number(req.params.id);
 
             if (isNaN(userId)) {
-                return res.status(400).json({ error: "Invalid user ID" });
+                res.status(400).json({ error: "Invalid user ID" });
             }
-
+            console.log("userId in con" , userId);
+            
             const payments = await StudentService.getPaymentsByUserId(userId);
             res.status(200).json({ payments });
         } catch (error) {
-            console.error("Error fetching payments:", error);
+            console.error("Error fetching payments:",( error as Error).message);
             res.status(400).json({ error: "Unable to fetch payments" });
         }
     }

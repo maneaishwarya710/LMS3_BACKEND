@@ -21,6 +21,9 @@ export class Quiz {
     @JoinColumn({ name: "courseId" })
     course: Course;
 
+    // @Column(()=>User, (user)=>user.quiz, {onDelete:"CASCADE"})
+    // @JoinColumn({ name: "courseId" })
+
     @OneToMany(() => Result, (result) => result.quiz, {cascade:true})
     results: Result[];
 }

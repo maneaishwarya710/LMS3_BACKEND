@@ -2,6 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
 import { Enrollment } from "./enrollment";
 import { Payment } from "./payment";
 import { Result } from "./result";
+import { Course } from "./course";
 
 @Entity("USER_LMS")
 export class User {
@@ -29,4 +30,7 @@ export class User {
 
     @OneToMany(() => Result, (result) => result.user, {cascade:true})
     results: Result[];
+
+    @OneToMany(()=>Course, (course)=>course.user, {cascade:true})
+    course:Course;
 }

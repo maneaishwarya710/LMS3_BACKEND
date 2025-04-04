@@ -13,6 +13,7 @@ import { EnrollmentRepository } from "../repositories/enrollment.repository";
 import { UserRepository } from "../repositories/user.repository";
 import { Payment } from "../entities/payment";
 import { PaymentRepository } from "../repositories/payment.repository";
+import { log } from "console";
 dotenv.config();
 
 export class StudentService {
@@ -55,6 +56,7 @@ export class StudentService {
     }
 
     static async getStudentResults(userId: number): Promise<ResultDTO[]> {
+        
         const results = await ResultRepository.find({
             where: { user: { userId } },
             relations: ['course', 'quiz', 'user']
@@ -76,6 +78,8 @@ export class StudentService {
     }
 
     static async getPaymentsByUserId(userId: number): Promise<Payment[]> {
+        console.log(" in service",userId);
+        
         const payments = await PaymentRepository.find({
             where: { user: { userId } },
             relations: ['user']

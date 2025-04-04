@@ -1,8 +1,9 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne, JoinTable } from "typeorm";
 import { Enrollment } from "./enrollment";
 import { CourseContent } from "./courseContent";
 import { Quiz } from "./quiz";
 import { Result } from "./result";
+import { User } from "./user";
 
 @Entity("COURSE_LMS")
 export class Course {
@@ -19,6 +20,9 @@ export class Course {
     @Column()
     price: number;
 
+    @Column({default:'assets/noFound.jpg'})
+    imgurl:string;
+
     @OneToMany(() => Enrollment, (enrollment) => enrollment.course, {cascade:true})
     enrollments: Enrollment[];
 
@@ -30,4 +34,8 @@ export class Course {
 
     @OneToMany(() => Result, (result) => result.course, {cascade:true})
     results: Result[];
+
+    @ManyToOne(()=>User, (user)=>user.course, { onDelete: 'NO ACTION', onUpdate: 'NO ACTION' })
+    @JoinTable({name:"creatorId"})
+    user:User;
 }

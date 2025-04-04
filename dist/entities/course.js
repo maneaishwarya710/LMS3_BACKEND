@@ -15,6 +15,7 @@ const enrollment_1 = require("./enrollment");
 const courseContent_1 = require("./courseContent");
 const quiz_1 = require("./quiz");
 const result_1 = require("./result");
+const user_1 = require("./user");
 let Course = class Course {
 };
 exports.Course = Course;
@@ -35,6 +36,10 @@ __decorate([
     __metadata("design:type", Number)
 ], Course.prototype, "price", void 0);
 __decorate([
+    (0, typeorm_1.Column)({ default: 'assets/noFound.jpg' }),
+    __metadata("design:type", String)
+], Course.prototype, "imgurl", void 0);
+__decorate([
     (0, typeorm_1.OneToMany)(() => enrollment_1.Enrollment, (enrollment) => enrollment.course, { cascade: true }),
     __metadata("design:type", Array)
 ], Course.prototype, "enrollments", void 0);
@@ -50,6 +55,11 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => result_1.Result, (result) => result.course, { cascade: true }),
     __metadata("design:type", Array)
 ], Course.prototype, "results", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => user_1.User, (user) => user.course, { onDelete: 'NO ACTION', onUpdate: 'NO ACTION' }),
+    (0, typeorm_1.JoinTable)({ name: "creatorId" }),
+    __metadata("design:type", user_1.User)
+], Course.prototype, "user", void 0);
 exports.Course = Course = __decorate([
     (0, typeorm_1.Entity)("COURSE_LMS")
 ], Course);

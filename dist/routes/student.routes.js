@@ -10,5 +10,5 @@ const studentRouter = express_1.default.Router();
 studentRouter.post('/enroll', auth_middleware_1.authenticateUser, (0, auth_middleware_1.roleBasedAccess)(['student']), student_controller_1.StudentController.enroll);
 studentRouter.get('/getenrolled/:id', auth_middleware_1.authenticateUser, (0, auth_middleware_1.roleBasedAccess)(['student']), student_controller_1.StudentController.getEnrolledCourses);
 studentRouter.get('/getresult/:id', auth_middleware_1.authenticateUser, (0, auth_middleware_1.roleBasedAccess)(['student']), student_controller_1.StudentController.getStudentResult);
-studentRouter.get('/getpaylist/:id', auth_middleware_1.authenticateUser, (0, auth_middleware_1.roleBasedAccess)(['student']), student_controller_1.StudentController.getStudentResult);
+studentRouter.get('/getpaylist/:id', auth_middleware_1.authenticateUser, (0, auth_middleware_1.roleBasedAccess)(['student']), student_controller_1.StudentController.getPaymentsByUserId);
 exports.default = studentRouter;
