@@ -11,6 +11,6 @@ tutorRouter.post('/ccc', authenticateUser, roleBasedAccess(['tutor']), TutorCont
 tutorRouter.delete('/delete/:id', authenticateUser, roleBasedAccess(['tutor']), TutorController.removeCourseById);
 tutorRouter.post('/cquiz', authenticateUser, roleBasedAccess(['tutor']), TutorController.createNewQuiz);
 tutorRouter.post('/cresult', authenticateUser, roleBasedAccess(['tutor']), TutorController.createResult);
-// tutorRouter.post('/cquizSec', authenticateUser, roleBasedAccess(['tutor']), TutorController.createNewQuiz1);
+
 
 export default tutorRouter;

@@ -30,7 +30,7 @@ __decorate([
     __metadata("design:type", Number)
 ], QuizAttempt.prototype, "quizId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: "float" }),
+    (0, typeorm_1.Column)({ type: 'float', default: 0 }),
     __metadata("design:type", Number)
 ], QuizAttempt.prototype, "score", void 0);
 __decorate([
@@ -52,5 +52,5 @@ __decorate([
     __metadata("design:type", Array)
 ], QuizAttempt.prototype, "answers", void 0);
 exports.QuizAttempt = QuizAttempt = __decorate([
-    (0, typeorm_1.Entity)()
+    (0, typeorm_1.Entity)({ name: "QUIZATTEMPT_LMS" })
 ], QuizAttempt);

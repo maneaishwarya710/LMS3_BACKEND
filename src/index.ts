@@ -5,6 +5,7 @@ import userRouter from "./routes/user.routes";
 import adminRouter from "./routes/admin.routes";
 import tutorRouter from "./routes/tutor.routes";
 import studentRouter from "./routes/student.routes";
+import quizRouter from "./routes/quiz.routes";
 
 const app=express();
 
@@ -17,6 +18,7 @@ app.use('/user', userRouter);
 app.use('/admin', adminRouter);
 app.use('/tutor', tutorRouter);
 app.use('/student', studentRouter);
+app.use('/quiz', quizRouter)
 
 const PORT=3004;
 AppDataSource.initialize().then(() => {

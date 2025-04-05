@@ -14,5 +14,4 @@ tutorRouter.post('/ccc', auth_middleware_1.authenticateUser, (0, auth_middleware
 tutorRouter.delete('/delete/:id', auth_middleware_1.authenticateUser, (0, auth_middleware_1.roleBasedAccess)(['tutor']), tutor_controller_1.TutorController.removeCourseById);
 tutorRouter.post('/cquiz', auth_middleware_1.authenticateUser, (0, auth_middleware_1.roleBasedAccess)(['tutor']), tutor_controller_1.TutorController.createNewQuiz);
 tutorRouter.post('/cresult', auth_middleware_1.authenticateUser, (0, auth_middleware_1.roleBasedAccess)(['tutor']), tutor_controller_1.TutorController.createResult);
-// tutorRouter.post('/cquizSec', authenticateUser, roleBasedAccess(['tutor']), TutorController.createNewQuiz1);
 exports.default = tutorRouter;

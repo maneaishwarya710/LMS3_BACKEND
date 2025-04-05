@@ -33,5 +33,5 @@ __decorate([
     __metadata("design:type", question_1.Question)
 ], Option.prototype, "question", void 0);
 exports.Option = Option = __decorate([
-    (0, typeorm_1.Entity)()
+    (0, typeorm_1.Entity)({ name: "OPTION_LMS" })
 ], Option);

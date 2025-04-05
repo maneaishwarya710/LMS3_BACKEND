@@ -94,31 +94,6 @@ export class TutorService {
         };
     }
 
-
-    //new createQuiz method
-    // static async createNewQuiz1(quizDTO: QuizDTO1): Promise<QuizDTO1> {
-    //     const newQuiz = QuizRepository.create({
-    //         quizName: quizDTO.quizName,
-    //         description: quizDTO.description,
-    //         totalmarks: quizDTO.totalmarks,
-    //         course: { courseId: quizDTO.courseId },
-    //         user:{
-    //             userId:quizDTO.creatorId
-    //         }
-    //     });
-
-    //     const savedQuiz = await QuizRepository.save(newQuiz);
-
-    //     return {
-    //         quizId: savedQuiz.quizId,
-    //         quizName: savedQuiz.quizName,
-    //         description: savedQuiz.description,
-    //         totalmarks: savedQuiz.totalmarks,
-    //         courseId: savedQuiz.course.courseId,
-    //         creatorId: savedQuiz.user.userId
-    //     };
-    // }
-
     static async createResult(resultDTO: ResultDTO): Promise<ResultDTO> {
         const newResult = ResultRepository.create({
             score: resultDTO.score,

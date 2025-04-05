@@ -6,7 +6,7 @@ import { Option } from "./option";
 import { User } from "./user";
 import { Answer } from "./answer";
 
-@Entity()
+@Entity({name:"QUIZATTEMPT_LMS"})
 export class QuizAttempt {
 @PrimaryGeneratedColumn()
 attemptId: number;
@@ -14,7 +14,8 @@ attemptId: number;
 userId: number;
 @Column()
 quizId: number;
-@Column({ type: "float" })
+
+@Column({ type: 'float', default: 0 })
 score: number;
 @Column()
 attemptDate: Date;

@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
 import { Question } from "./question";
 
-@Entity()
+@Entity({name:"OPTION_LMS"})
 export class Option {
 @PrimaryGeneratedColumn()
 optionId: number;

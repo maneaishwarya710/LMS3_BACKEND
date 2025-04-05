@@ -79,16 +79,6 @@ export class TutorController {
         }
     }
 
-    // static async createNewQuiz1(req: Request, res: Response) {
-    //     try {
-    //         const quizDTO: QuizDTO1 = req.body; // Extract quiz details from the request body
-    //         const quiz = await TutorService.createNewQuiz1(quizDTO);
-    //         res.status(201).json({ message: "New Quiz created successfully", quiz });
-    //     } catch (error) {
-    //         res.status(400).json({ error: "Unable to create quiz!" });
-    //     }
-    // }
-
     static async createResult(req: Request, res: Response) {
         try {
             const resultDTO: ResultDTO = req.body; 
