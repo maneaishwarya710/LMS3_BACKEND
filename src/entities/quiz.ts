@@ -1,6 +1,9 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany } from "typeorm";
 import { Course } from "./course";
 import { Result } from "./result";
+import { User } from "./user";
+import { Question } from "./question";
+import { QuizAttempt } from "./quizAttempt";
 
 @Entity("Quiz_LMS")
 export class Quiz {
@@ -21,9 +24,16 @@ export class Quiz {
     @JoinColumn({ name: "courseId" })
     course: Course;
 
-    // @Column(()=>User, (user)=>user.quiz, {onDelete:"CASCADE"})
-    // @JoinColumn({ name: "courseId" })
+    // @ManyToOne(()=>User, (user)=>user.quiz)
+    // @JoinColumn({ name: "creatorId" })
+    // user:User;
 
     @OneToMany(() => Result, (result) => result.quiz, {cascade:true})
     results: Result[];
+
+    @OneToMany(()=>Question, (questions)=>questions.quiz)
+    questions:Question[];
+
+    @OneToMany(()=>QuizAttempt, (attempts)=>attempts.quiz)
+    attempts:QuizAttempt[];
 }

@@ -13,6 +13,8 @@ exports.Quiz = void 0;
 const typeorm_1 = require("typeorm");
 const course_1 = require("./course");
 const result_1 = require("./result");
+const question_1 = require("./question");
+const quizAttempt_1 = require("./quizAttempt");
 let Quiz = class Quiz {
 };
 exports.Quiz = Quiz;
@@ -41,6 +43,14 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => result_1.Result, (result) => result.quiz, { cascade: true }),
     __metadata("design:type", Array)
 ], Quiz.prototype, "results", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => question_1.Question, (questions) => questions.quiz),
+    __metadata("design:type", Array)
+], Quiz.prototype, "questions", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => quizAttempt_1.QuizAttempt, (attempts) => attempts.quiz),
+    __metadata("design:type", Array)
+], Quiz.prototype, "attempts", void 0);
 exports.Quiz = Quiz = __decorate([
     (0, typeorm_1.Entity)("Quiz_LMS")
 ], Quiz);

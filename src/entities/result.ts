@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, CreateDateColumn } from "typeorm";
 import { Course } from "./course";
 import { Quiz } from "./quiz";
 import { User } from "./user";
@@ -23,4 +23,7 @@ export class Result {
     @ManyToOne(() => User, (user) => user.results, {onDelete: "CASCADE" })
     @JoinColumn({ name: "userId" })
     user: User;
+
+    @CreateDateColumn()
+    attemptDate:Date;
 }

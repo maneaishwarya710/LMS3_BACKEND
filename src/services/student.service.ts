@@ -47,12 +47,17 @@ export class StudentService {
             throw new Error("No courses found for the enrolled student");
         }
 
-        return enrollments.map(enrollment => ({
-            courseId: enrollment.course.courseId,
-            courseName: enrollment.course.courseName,
-            description: enrollment.course.description,
-            price: enrollment.course.price
-        }));
+        return enrollments.map(enrollment => {
+            const course = enrollment.course;
+            const courseDTO = new CourseDTO();
+            courseDTO.courseId = course.courseId;
+            courseDTO.creatorId = course.user.userId; // Assuming creatorId is part of the course entity
+            courseDTO.courseName = course.courseName;
+            courseDTO.description = course.description;
+            courseDTO.price = course.price;
+            courseDTO.imgurl = course.imgurl;
+            return courseDTO;
+        });
     }
 
     static async getStudentResults(userId: number): Promise<ResultDTO[]> {
@@ -92,3 +97,21 @@ export class StudentService {
         return payments;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

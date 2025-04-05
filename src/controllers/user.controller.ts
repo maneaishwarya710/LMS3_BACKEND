@@ -18,6 +18,8 @@ export class UserController {
     }
     static async login(req: Request, res: Response) {
         const dto = new LoginDTO();
+
+        console.log("Logging Triggered")
         Object.assign(dto, req.body);
         const errors = await validate(dto);
         if (errors.length > 0) res.status(400).json(errors);

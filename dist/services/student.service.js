@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.StudentService = void 0;
 const dotenv_1 = __importDefault(require("dotenv"));
+const course_dto_1 = require("../dto/course.dto");
 const result_repository_1 = require("../repositories/result.repository");
 const enrollment_repository_1 = require("../repositories/enrollment.repository");
 const payment_repository_1 = require("../repositories/payment.repository");
@@ -47,12 +48,17 @@ class StudentService {
             if (!enrollments || enrollments.length === 0) {
                 throw new Error("No courses found for the enrolled student");
             }
-            return enrollments.map(enrollment => ({
-                courseId: enrollment.course.courseId,
-                courseName: enrollment.course.courseName,
-                description: enrollment.course.description,
-                price: enrollment.course.price
-            }));
+            return enrollments.map(enrollment => {
+                const course = enrollment.course;
+                const courseDTO = new course_dto_1.CourseDTO();
+                courseDTO.courseId = course.courseId;
+                courseDTO.creatorId = course.user.userId; // Assuming creatorId is part of the course entity
+                courseDTO.courseName = course.courseName;
+                courseDTO.description = course.description;
+                courseDTO.price = course.price;
+                courseDTO.imgurl = course.imgurl;
+                return courseDTO;
+            });
         });
     }
     static getStudentResults(userId) {

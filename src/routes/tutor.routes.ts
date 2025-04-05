@@ -5,9 +5,12 @@ import { authenticateUser, roleBasedAccess } from '../middleware/auth.middleware
 const tutorRouter=express.Router();
 
 tutorRouter.post('/cc', authenticateUser, roleBasedAccess(['tutor']), TutorController.createNewCourse);
+tutorRouter.get('/myCourses/:id', authenticateUser, roleBasedAccess(['tutor']), TutorController.getCoursesByCreatorId);
+tutorRouter.get('/contentByCourseId/:id', authenticateUser, roleBasedAccess(['tutor']), TutorController.getCourseContentsByCourseId);
 tutorRouter.post('/ccc', authenticateUser, roleBasedAccess(['tutor']), TutorController.createNewCourseContent);
 tutorRouter.delete('/delete/:id', authenticateUser, roleBasedAccess(['tutor']), TutorController.removeCourseById);
 tutorRouter.post('/cquiz', authenticateUser, roleBasedAccess(['tutor']), TutorController.createNewQuiz);
 tutorRouter.post('/cresult', authenticateUser, roleBasedAccess(['tutor']), TutorController.createResult);
+// tutorRouter.post('/cquizSec', authenticateUser, roleBasedAccess(['tutor']), TutorController.createNewQuiz1);
 
 export default tutorRouter;

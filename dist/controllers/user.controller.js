@@ -34,6 +34,7 @@ class UserController {
     static login(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const dto = new login_dto_1.LoginDTO();
+            console.log("Logging Triggered");
             Object.assign(dto, req.body);
             const errors = yield (0, class_validator_1.validate)(dto);
             if (errors.length > 0)

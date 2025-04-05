@@ -15,6 +15,7 @@ const enrollment_1 = require("./enrollment");
 const payment_1 = require("./payment");
 const result_1 = require("./result");
 const course_1 = require("./course");
+const quizAttempt_1 = require("./quizAttempt");
 let User = class User {
 };
 exports.User = User;
@@ -52,8 +53,12 @@ __decorate([
 ], User.prototype, "results", void 0);
 __decorate([
     (0, typeorm_1.OneToMany)(() => course_1.Course, (course) => course.user, { cascade: true }),
-    __metadata("design:type", course_1.Course)
+    __metadata("design:type", Array)
 ], User.prototype, "course", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => quizAttempt_1.QuizAttempt, (quizAttempts) => quizAttempts.user, { cascade: true }),
+    __metadata("design:type", Array)
+], User.prototype, "quizAttempts", void 0);
 exports.User = User = __decorate([
     (0, typeorm_1.Entity)("USER_LMS")
 ], User);

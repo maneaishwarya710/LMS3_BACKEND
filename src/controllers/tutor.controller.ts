@@ -6,6 +6,7 @@ import { CourseContentDTO } from "../dto/courseContent.dto";
 import { QuizDTO } from "../dto/quiz.dto";
 import { ResultDTO } from "../dto/result.dto";
 import { StudentService } from "../services/student.service";
+import { QuizDTO1 } from "../dto/quiz1.dto";
 export class TutorController {
     static async createNewCourse(req: Request, res: Response) {
         try {
@@ -16,6 +17,37 @@ export class TutorController {
             res.status(400).json({ error: "Unable to create course!" });
         }
     }
+
+    static async getCourseContentsByCourseId(req: Request, res: Response) {
+        try {
+            console.log("------------------------------------");
+            
+            const courseId= Number(req.params.id);
+            console.log("const courseId= Number(req.params.id);S");
+            
+            console.log(`Course content by courseId: ${courseId}`);
+            const courseContents = await TutorService.getCourseContentsByCourseId(courseId);
+            console.log("-----------------",courseContents)
+            res.status(200).json(courseContents);
+           
+            
+            
+        } catch (error) {
+            res.status(400).json({ error: "Unable to retrieve course contents!" });
+        }
+    }
+    
+
+    static async getCoursesByCreatorId(req: Request, res: Response) {
+        try {
+            const creatorId: number = parseInt(req.params.id, 10);
+            const courses = await TutorService.getCoursesByCreatorId(creatorId);
+            res.status(200).json(courses);
+        } catch (error) {
+            res.status(400).json({ error: "Unable to retrieve courses!" });
+        }
+    }
+
 
     static async createNewCourseContent(req: Request, res: Response) {
         try {
@@ -46,6 +78,16 @@ export class TutorController {
             res.status(400).json({ error: "Unable to create quiz!" });
         }
     }
+
+    // static async createNewQuiz1(req: Request, res: Response) {
+    //     try {
+    //         const quizDTO: QuizDTO1 = req.body; // Extract quiz details from the request body
+    //         const quiz = await TutorService.createNewQuiz1(quizDTO);
+    //         res.status(201).json({ message: "New Quiz created successfully", quiz });
+    //     } catch (error) {
+    //         res.status(400).json({ error: "Unable to create quiz!" });
+    //     }
+    // }
 
     static async createResult(req: Request, res: Response) {
         try {

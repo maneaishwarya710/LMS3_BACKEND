@@ -20,7 +20,7 @@ app.use('/user', user_routes_1.default);
 app.use('/admin', admin_routes_1.default);
 app.use('/tutor', tutor_routes_1.default);
 app.use('/student', student_routes_1.default);
-const PORT = 3003;
+const PORT = 3004;
 data_source_1.AppDataSource.initialize().then(() => {
     app.listen(PORT, () => {
         console.log(`Server is running on port ${PORT}`);

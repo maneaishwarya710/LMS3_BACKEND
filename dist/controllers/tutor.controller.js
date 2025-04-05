@@ -24,6 +24,34 @@ class TutorController {
             }
         });
     }
+    static getCourseContentsByCourseId(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                console.log("------------------------------------");
+                const courseId = Number(req.params.id);
+                console.log("const courseId= Number(req.params.id);S");
+                console.log(`Course content by courseId: ${courseId}`);
+                const courseContents = yield tutor_service_1.TutorService.getCourseContentsByCourseId(courseId);
+                console.log("-----------------", courseContents);
+                res.status(200).json(courseContents);
+            }
+            catch (error) {
+                res.status(400).json({ error: "Unable to retrieve course contents!" });
+            }
+        });
+    }
+    static getCoursesByCreatorId(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const creatorId = parseInt(req.params.id, 10);
+                const courses = yield tutor_service_1.TutorService.getCoursesByCreatorId(creatorId);
+                res.status(200).json(courses);
+            }
+            catch (error) {
+                res.status(400).json({ error: "Unable to retrieve courses!" });
+            }
+        });
+    }
     static createNewCourseContent(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -60,6 +88,15 @@ class TutorController {
             }
         });
     }
+    // static async createNewQuiz1(req: Request, res: Response) {
+    //     try {
+    //         const quizDTO: QuizDTO1 = req.body; // Extract quiz details from the request body
+    //         const quiz = await TutorService.createNewQuiz1(quizDTO);
+    //         res.status(201).json({ message: "New Quiz created successfully", quiz });
+    //     } catch (error) {
+    //         res.status(400).json({ error: "Unable to create quiz!" });
+    //     }
+    // }
     static createResult(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {

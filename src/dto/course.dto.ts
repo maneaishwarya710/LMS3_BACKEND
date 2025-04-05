@@ -4,6 +4,8 @@ export class CourseDTO {
     @IsNotEmpty({ message: 'Course ID is required' })
     courseId: number;
 
+    creatorId:number;
+
     @IsNotEmpty({ message: 'Course name is required' })
     courseName: string;
 
@@ -16,4 +18,6 @@ export class CourseDTO {
     @IsNumber({}, { message: 'Price must be a number' })
     @IsPositive({ message: 'Price must be a positive number' })
     price: number;
+
+    imgurl:string;
 }

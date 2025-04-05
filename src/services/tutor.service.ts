@@ -8,32 +8,55 @@ import { QuizRepository } from "../repositories/quiz.repository";
 import { QuizDTO } from "../dto/quiz.dto";
 import { ResultDTO } from "../dto/result.dto";
 import { ResultRepository } from "../repositories/result.repository";
+import { QuizDTO1 } from "../dto/quiz1.dto";
 dotenv.config();
 
 export class TutorService {
-    static async createNewCourse(courseDTO: CourseDTO): Promise<CourseDTO> {
+    static async createNewCourse(courseDTO: CourseDTO): Promise<CourseDTO>{
 
         const newCourse = courseRepository.create({
             courseName: courseDTO.courseName,
+            imgurl:courseDTO.imgurl,
             description: courseDTO.description,
-            price: courseDTO.price
+            price: courseDTO.price,
+            user:{
+                userId:courseDTO.creatorId
+            }
+            
         });
-
         const savedCourse = await courseRepository.save(newCourse);
 
         return {
             courseId: savedCourse.courseId,
             courseName: savedCourse.courseName,
+            imgurl:savedCourse.imgurl,
             description: savedCourse.description,
-            price: savedCourse.price
+            price: savedCourse.price,
+            creatorId:courseDTO.creatorId
+            
         };
     }
 
+    static async getCoursesByCreatorId(creatorId: number): Promise<Course[]> {
+        const courses = await courseRepository.find({ where: { user: { userId: creatorId } } });
+        return courses;
+     }
+
+    static async getCourseContentsByCourseId(courseId: number) {
+        return await courseContentRepository.find({ where: { course: { courseId:courseId } } });
+       
+      }
+    
+    //Fetch quiz by quizId
+    static async getQuizByCourseId(courseId: number) {
+        return await QuizRepository.find({ where: { course: { courseId:courseId } } });
+    }
+    
     static async createNewCourseContent(courseContentDTO: CourseContentDTO): Promise<CourseContentDTO> {
         const newCourseContent = courseContentRepository.create({
             contentType: courseContentDTO.contentType,
             content: courseContentDTO.content,
-            course: { courseId: courseContentDTO.courseId } // Assuming courseId is provided
+            course: { courseId: courseContentDTO.courseId } 
         });
 
         const savedCourseContent = await courseContentRepository.save(newCourseContent);
@@ -56,7 +79,8 @@ export class TutorService {
             quizName: quizDTO.quizName,
             description: quizDTO.description,
             totalmarks: quizDTO.totalmarks,
-            course: { courseId: quizDTO.courseId } // Assuming courseId is provided
+            course: { courseId: quizDTO.courseId },
+            
         });
 
         const savedQuiz = await QuizRepository.save(newQuiz);
@@ -69,6 +93,31 @@ export class TutorService {
             courseId: savedQuiz.course.courseId
         };
     }
+
+
+    //new createQuiz method
+    // static async createNewQuiz1(quizDTO: QuizDTO1): Promise<QuizDTO1> {
+    //     const newQuiz = QuizRepository.create({
+    //         quizName: quizDTO.quizName,
+    //         description: quizDTO.description,
+    //         totalmarks: quizDTO.totalmarks,
+    //         course: { courseId: quizDTO.courseId },
+    //         user:{
+    //             userId:quizDTO.creatorId
+    //         }
+    //     });
+
+    //     const savedQuiz = await QuizRepository.save(newQuiz);
+
+    //     return {
+    //         quizId: savedQuiz.quizId,
+    //         quizName: savedQuiz.quizName,
+    //         description: savedQuiz.description,
+    //         totalmarks: savedQuiz.totalmarks,
+    //         courseId: savedQuiz.course.courseId,
+    //         creatorId: savedQuiz.user.userId
+    //     };
+    // }
 
     static async createResult(resultDTO: ResultDTO): Promise<ResultDTO> {
         const newResult = ResultRepository.create({

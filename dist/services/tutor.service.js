@@ -25,16 +25,39 @@ class TutorService {
         return __awaiter(this, void 0, void 0, function* () {
             const newCourse = course_repository_1.courseRepository.create({
                 courseName: courseDTO.courseName,
+                imgurl: courseDTO.imgurl,
                 description: courseDTO.description,
-                price: courseDTO.price
+                price: courseDTO.price,
+                user: {
+                    userId: courseDTO.creatorId
+                }
             });
             const savedCourse = yield course_repository_1.courseRepository.save(newCourse);
             return {
                 courseId: savedCourse.courseId,
                 courseName: savedCourse.courseName,
+                imgurl: savedCourse.imgurl,
                 description: savedCourse.description,
-                price: savedCourse.price
+                price: savedCourse.price,
+                creatorId: courseDTO.creatorId
             };
+        });
+    }
+    static getCoursesByCreatorId(creatorId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const courses = yield course_repository_1.courseRepository.find({ where: { user: { userId: creatorId } } });
+            return courses;
+        });
+    }
+    static getCourseContentsByCourseId(courseId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield courseContent_repoisitory_1.courseContentRepository.find({ where: { course: { courseId: courseId } } });
+        });
+    }
+    //Fetch quiz by quizId
+    static getQuizByCourseId(courseId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield quiz_repository_1.QuizRepository.find({ where: { course: { courseId: courseId } } });
         });
     }
     static createNewCourseContent(courseContentDTO) {
@@ -42,7 +65,7 @@ class TutorService {
             const newCourseContent = courseContent_repoisitory_1.courseContentRepository.create({
                 contentType: courseContentDTO.contentType,
                 content: courseContentDTO.content,
-                course: { courseId: courseContentDTO.courseId } // Assuming courseId is provided
+                course: { courseId: courseContentDTO.courseId }
             });
             const savedCourseContent = yield courseContent_repoisitory_1.courseContentRepository.save(newCourseContent);
             return {
@@ -65,7 +88,7 @@ class TutorService {
                 quizName: quizDTO.quizName,
                 description: quizDTO.description,
                 totalmarks: quizDTO.totalmarks,
-                course: { courseId: quizDTO.courseId } // Assuming courseId is provided
+                course: { courseId: quizDTO.courseId },
             });
             const savedQuiz = yield quiz_repository_1.QuizRepository.save(newQuiz);
             return {
@@ -77,6 +100,27 @@ class TutorService {
             };
         });
     }
+    //new createQuiz method
+    // static async createNewQuiz1(quizDTO: QuizDTO1): Promise<QuizDTO1> {
+    //     const newQuiz = QuizRepository.create({
+    //         quizName: quizDTO.quizName,
+    //         description: quizDTO.description,
+    //         totalmarks: quizDTO.totalmarks,
+    //         course: { courseId: quizDTO.courseId },
+    //         user:{
+    //             userId:quizDTO.creatorId
+    //         }
+    //     });
+    //     const savedQuiz = await QuizRepository.save(newQuiz);
+    //     return {
+    //         quizId: savedQuiz.quizId,
+    //         quizName: savedQuiz.quizName,
+    //         description: savedQuiz.description,
+    //         totalmarks: savedQuiz.totalmarks,
+    //         courseId: savedQuiz.course.courseId,
+    //         creatorId: savedQuiz.user.userId
+    //     };
+    // }
     static createResult(resultDTO) {
         return __awaiter(this, void 0, void 0, function* () {
             const newResult = result_repository_1.ResultRepository.create({
