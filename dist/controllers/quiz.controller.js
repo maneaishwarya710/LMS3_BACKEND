@@ -15,10 +15,12 @@ const quizService = new quiz_service_1.QuizService();
 const createQuiz = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { quizData, questions } = req.body;
+        // const savedQuiz=await quizService.createQuiz(quizData, questions);
         const quiz = yield quizService.createQuiz(quizData, questions);
         res.status(201).json(quiz);
     }
     catch (error) {
+        console.error(`Error creating quiz:`, error);
         res.status(500).json({ message: 'Error creating quiz', error });
     }
 });

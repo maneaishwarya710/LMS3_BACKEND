@@ -6,9 +6,11 @@ const quizService = new QuizService();
 export const createQuiz = async (req: Request, res: Response) => {
   try {
     const { quizData, questions } = req.body;
+    // const savedQuiz=await quizService.createQuiz(quizData, questions);
     const quiz = await quizService.createQuiz(quizData, questions);
     res.status(201).json(quiz);
   } catch (error) {
+    console.error(`Error creating quiz:`, error)
     res.status(500).json({ message: 'Error creating quiz', error });
   }
 };

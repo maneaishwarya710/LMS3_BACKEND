@@ -9,15 +9,66 @@ import { Answer } from '../entities/answer';
 import { QuizAttempt } from '../entities/quizAttempt';
 import { answerRepository } from '../repositories/answer.repository';
 import { Result } from '../entities/result';
+import { optionRepository } from '../repositories/option.repository';
+import { courseRepository } from '../repositories/course.repository';
 
 export class QuizService {
-    async createQuiz(quizData: Partial<Quiz>, questions: Partial<Question>[]): Promise<Quiz> {
-    const quiz = QuizRepository.create(quizData);
+  //   async createQuiz(quizData: Partial<Quiz>, questions: Partial<Question>[]): Promise<Quiz> {
+  //   const quiz = QuizRepository.create(quizData);
+  //   const savedQuiz = await QuizRepository.save(quiz);
+
+  //   for (const questionData of questions) {
+  //     const question = questionRepository.create({ ...questionData, quiz: savedQuiz });
+  //     await questionRepository.save(question);
+  //   }
+
+  //   return savedQuiz;
+  // }
+
+  async createQuiz(quizData: Partial<Quiz>, questions: any[]): Promise<Quiz> {
+    // Fetch course from DB to avoid NULL courseId
+    // const course = await courseRepository.findOne({ where: { courseId: quizData.courseId } });
+    // if (quizData.course) {
+    //   const course = await courseRepository.findOne({ where: { courseId: quizData.course.courseId } });
+    // } else {
+        // Handle the case where quizData.course is undefined
+    //   console.error("Course data is missing.");
+    // }
+
+    const course = await courseRepository.findOne({ where: { courseId: quizData.course?.courseId } });
+
+    
+
+
+    if (!course) {
+      throw new Error('Course not found');
+    }
+
+    const quiz = QuizRepository.create({
+      quizName: quizData.quizName,
+      description: quizData.description,
+      totalmarks: quizData.totalmarks,
+      course: course // ✅ Set course relation properly
+    });
+
     const savedQuiz = await QuizRepository.save(quiz);
 
-    for (const questionData of questions) {
-      const question = questionRepository.create({ ...questionData, quiz: savedQuiz });
-      await questionRepository.save(question);
+    for (const q of questions) {
+      const question = questionRepository.create({
+        questionText: q.questionText,
+        correctOptionId: q.correctOptionId,
+        quiz: savedQuiz
+      });
+
+      const savedQuestion = await questionRepository.save(question);
+
+      for (const opt of q.options) {
+        const option = optionRepository.create({
+          optionText: opt.optionText,
+          question: savedQuestion
+        });
+        await optionRepository.save(option);
+      }
     }
 
     return savedQuiz;

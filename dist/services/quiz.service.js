@@ -15,14 +15,54 @@ const quiz_repository_1 = require("../repositories/quiz.repository");
 const result_repository_1 = require("../repositories/result.repository");
 const quizAttempt_repository_1 = require("../repositories/quizAttempt.repository");
 const answer_repository_1 = require("../repositories/answer.repository");
+const option_repository_1 = require("../repositories/option.repository");
+const course_repository_1 = require("../repositories/course.repository");
 class QuizService {
+    //   async createQuiz(quizData: Partial<Quiz>, questions: Partial<Question>[]): Promise<Quiz> {
+    //   const quiz = QuizRepository.create(quizData);
+    //   const savedQuiz = await QuizRepository.save(quiz);
+    //   for (const questionData of questions) {
+    //     const question = questionRepository.create({ ...questionData, quiz: savedQuiz });
+    //     await questionRepository.save(question);
+    //   }
+    //   return savedQuiz;
+    // }
     createQuiz(quizData, questions) {
         return __awaiter(this, void 0, void 0, function* () {
-            const quiz = quiz_repository_1.QuizRepository.create(quizData);
+            // Fetch course from DB to avoid NULL courseId
+            // const course = await courseRepository.findOne({ where: { courseId: quizData.courseId } });
+            // if (quizData.course) {
+            //   const course = await courseRepository.findOne({ where: { courseId: quizData.course.courseId } });
+            // } else {
+            // Handle the case where quizData.course is undefined
+            //   console.error("Course data is missing.");
+            // }
+            var _a;
+            const course = yield course_repository_1.courseRepository.findOne({ where: { courseId: (_a = quizData.course) === null || _a === void 0 ? void 0 : _a.courseId } });
+            if (!course) {
+                throw new Error('Course not found');
+            }
+            const quiz = quiz_repository_1.QuizRepository.create({
+                quizName: quizData.quizName,
+                description: quizData.description,
+                totalmarks: quizData.totalmarks,
+                course: course // ✅ Set course relation properly
+            });
             const savedQuiz = yield quiz_repository_1.QuizRepository.save(quiz);
-            for (const questionData of questions) {
-                const question = question_repository_1.questionRepository.create(Object.assign(Object.assign({}, questionData), { quiz: savedQuiz }));
-                yield question_repository_1.questionRepository.save(question);
+            for (const q of questions) {
+                const question = question_repository_1.questionRepository.create({
+                    questionText: q.questionText,
+                    correctOptionId: q.correctOptionId,
+                    quiz: savedQuiz
+                });
+                const savedQuestion = yield question_repository_1.questionRepository.save(question);
+                for (const opt of q.options) {
+                    const option = option_repository_1.optionRepository.create({
+                        optionText: opt.optionText,
+                        question: savedQuestion
+                    });
+                    yield option_repository_1.optionRepository.save(option);
+                }
             }
             return savedQuiz;
         });
