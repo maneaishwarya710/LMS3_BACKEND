@@ -24,6 +24,6 @@ export class Result {
     @JoinColumn({ name: "userId" })
     user: User;
 
-    @CreateDateColumn()
+    @CreateDateColumn({type:'datetime', default:()=>'GETDATE()'})
     attemptDate:Date;
 }

@@ -8,6 +8,8 @@ export const createQuiz = async (req: Request, res: Response) => {
     const { quizData, questions } = req.body;
     // const savedQuiz=await quizService.createQuiz(quizData, questions);
     const quiz = await quizService.createQuiz(quizData, questions);
+    console.log("In create quiz controller:", quizData);
+    
     res.status(201).json(quiz);
   } catch (error) {
     console.error(`Error creating quiz:`, error)
@@ -19,6 +21,8 @@ export const getQuizByCourseId = async (req: Request, res: Response) => {
     try {
       const courseId = Number(req.params.courseId);
       const quizzes = await quizService.getQuizByCourseId(courseId);
+      console.log("In getQuizByCourseId controller", quizzes);
+      
       res.status(200).json(quizzes);
     } catch (error) {
       res.status(500).json({ message: 'Error retrieving quizzes', error });

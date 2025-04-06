@@ -24,10 +24,15 @@ export class AdminService {
         return userDTOs;
     }
 
-    static async deleteUserById(userId: number) {
+    static async deleteUserByUsername(username: string) {
         await UserRepository
-            .createQueryBuilder().delete().from(User).where("userId = :userId", { userId: userId }).execute();
+            .createQueryBuilder()
+            .delete()
+            .from(User)
+            .where("username = :username", { username: username })
+            .execute();
     }
+    
 
     static async addUser(data: UserDTO) {
         const { username, email, password, userType } = data;

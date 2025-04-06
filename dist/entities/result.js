@@ -41,7 +41,7 @@ __decorate([
     __metadata("design:type", user_1.User)
 ], Result.prototype, "user", void 0);
 __decorate([
-    (0, typeorm_1.CreateDateColumn)(),
+    (0, typeorm_1.CreateDateColumn)({ type: 'datetime', default: () => 'GETDATE()' }),
     __metadata("design:type", Date)
 ], Result.prototype, "attemptDate", void 0);
 exports.Result = Result = __decorate([

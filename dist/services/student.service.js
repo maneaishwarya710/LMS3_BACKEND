@@ -14,7 +14,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.StudentService = void 0;
 const dotenv_1 = __importDefault(require("dotenv"));
-const course_dto_1 = require("../dto/course.dto");
 const result_repository_1 = require("../repositories/result.repository");
 const enrollment_repository_1 = require("../repositories/enrollment.repository");
 const payment_repository_1 = require("../repositories/payment.repository");
@@ -46,21 +45,31 @@ class StudentService {
                 relations: ['course']
             });
             if (!enrollments || enrollments.length === 0) {
-                throw new Error("No courses found for the enrolled student");
+                throw new Error("No enrollments found for the user");
             }
-            return enrollments.map(enrollment => {
-                const course = enrollment.course;
-                const courseDTO = new course_dto_1.CourseDTO();
-                courseDTO.courseId = course.courseId;
-                courseDTO.creatorId = course.user.userId; // Assuming creatorId is part of the course entity
-                courseDTO.courseName = course.courseName;
-                courseDTO.description = course.description;
-                courseDTO.price = course.price;
-                courseDTO.imgurl = course.imgurl;
-                return courseDTO;
-            });
+            return enrollments.map(enrollment => enrollment.course);
         });
     }
+    // static async getEnrolledCourses(userId: number): Promise<CourseDTO[]> {
+    //     const enrollments = await EnrollmentRepository.find({
+    //         where: { user: { userId } },
+    //         relations: ['course']
+    //     });
+    //     if (!enrollments || enrollments.length === 0) {
+    //         throw new Error("No courses found for the enrolled student");
+    //     }
+    //     return enrollments.map(enrollment => {
+    //         const course = enrollment.course;
+    //         const courseDTO = new CourseDTO();
+    //         courseDTO.courseId = course.courseId;
+    //         courseDTO.creatorId = course.user.userId; // Assuming creatorId is part of the course entity
+    //         courseDTO.courseName = course.courseName;
+    //         courseDTO.description = course.description;
+    //         courseDTO.price = course.price;
+    //         courseDTO.imgurl = course.imgurl;
+    //         return courseDTO;
+    //     });
+    // }
     static getStudentResults(userId) {
         return __awaiter(this, void 0, void 0, function* () {
             const results = yield result_repository_1.ResultRepository.find({

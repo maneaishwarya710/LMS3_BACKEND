@@ -18,16 +18,18 @@ export class StudentController {
         }
     }
 
-    static async getEnrolledCourses(req: Request, res: Response){
+    static async getEnrolledCourses(req: Request, res: Response) {
         try {
-            const userId = req.params.id; 
+            const userId = req.params.id;
+            console.log("User ID:", userId); // Log the userId to verify
             const enrolledCourses = await StudentService.getEnrolledCourses(+userId);
             res.status(200).json({ enrolledCourses });
         } catch (error) {
             console.error("Error fetching enrolled courses:", error);
-            res.status(400).json({ error: "Unable to fetch enrolled courses!"});
+            res.status(400).json({ error: "Unable to fetch enrolled courses!" });
         }
     }
+    
 
     static async getStudentResult(req: Request, res: Response) {
         try {

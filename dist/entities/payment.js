@@ -24,7 +24,7 @@ __decorate([
     __metadata("design:type", Number)
 ], Payment.prototype, "amount", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ type: 'datetime', default: () => 'GETDATE()' }),
     __metadata("design:type", Date)
 ], Payment.prototype, "paymentDate", void 0);
 __decorate([

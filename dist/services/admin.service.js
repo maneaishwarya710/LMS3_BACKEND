@@ -33,10 +33,14 @@ class AdminService {
             return userDTOs;
         });
     }
-    static deleteUserById(userId) {
+    static deleteUserByUsername(username) {
         return __awaiter(this, void 0, void 0, function* () {
             yield user_repository_1.UserRepository
-                .createQueryBuilder().delete().from(user_1.User).where("userId = :userId", { userId: userId }).execute();
+                .createQueryBuilder()
+                .delete()
+                .from(user_1.User)
+                .where("username = :username", { username: username })
+                .execute();
         });
     }
     static addUser(data) {

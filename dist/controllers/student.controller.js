@@ -29,6 +29,7 @@ class StudentController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const userId = req.params.id;
+                console.log("User ID:", userId); // Log the userId to verify
                 const enrolledCourses = yield student_service_1.StudentService.getEnrolledCourses(+userId);
                 res.status(200).json({ enrolledCourses });
             }

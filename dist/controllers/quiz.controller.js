@@ -17,6 +17,7 @@ const createQuiz = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         const { quizData, questions } = req.body;
         // const savedQuiz=await quizService.createQuiz(quizData, questions);
         const quiz = yield quizService.createQuiz(quizData, questions);
+        console.log("In create quiz controller:", quizData);
         res.status(201).json(quiz);
     }
     catch (error) {
@@ -29,6 +30,7 @@ const getQuizByCourseId = (req, res) => __awaiter(void 0, void 0, void 0, functi
     try {
         const courseId = Number(req.params.courseId);
         const quizzes = yield quizService.getQuizByCourseId(courseId);
+        console.log("In getQuizByCourseId controller", quizzes);
         res.status(200).json(quizzes);
     }
     catch (error) {

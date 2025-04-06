@@ -44,7 +44,7 @@ __decorate([
     __metadata("design:type", Array)
 ], Quiz.prototype, "results", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => question_1.Question, (questions) => questions.quiz),
+    (0, typeorm_1.OneToMany)(() => question_1.Question, (questions) => questions.quiz, { cascade: true, eager: true }),
     __metadata("design:type", Array)
 ], Quiz.prototype, "questions", void 0);
 __decorate([

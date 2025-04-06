@@ -8,18 +8,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAllCourses = void 0;
-const course_service_1 = require("../services/course.service");
-const courseService = new course_service_1.CourseService();
-const getAllCourses = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const courses = yield courseService.getAllCourses();
-        console.log("In getAllCourses controller", courses);
-        res.status(200).json(courses);
+exports.CourseService = void 0;
+const dotenv_1 = __importDefault(require("dotenv"));
+const course_repository_1 = require("../repositories/course.repository");
+dotenv_1.default.config();
+class CourseService {
+    getAllCourses() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield course_repository_1.courseRepository.find({ relations: ['user', 'enrollments', 'contents', 'quizzes', 'results'] });
+        });
     }
-    catch (error) {
-        res.status(500).json({ message: 'Error retrieving courses', error });
-    }
-});
-exports.getAllCourses = getAllCourses;
+}
+exports.CourseService = CourseService;

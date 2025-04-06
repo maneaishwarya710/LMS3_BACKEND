@@ -25,11 +25,11 @@ class AdminController {
             }
         });
     }
-    static deleteUserById(req, res) {
+    static deleteUserByUsername(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const userId = Number(req.params.id);
-                yield admin_service_1.AdminService.deleteUserById(userId);
+                const username = req.params.username;
+                yield admin_service_1.AdminService.deleteUserByUsername(username);
                 res.status(201).json({ message: "User deleted successfully!" });
             }
             catch (error) {

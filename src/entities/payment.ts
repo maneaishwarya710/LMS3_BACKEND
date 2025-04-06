@@ -10,8 +10,9 @@ export class Payment {
     @Column("decimal", { precision: 10, scale: 2 })
     amount: number;
 
-    @Column()
+    @Column({type:'datetime', default:()=>'GETDATE()'})
     paymentDate: Date;
+    
 
     @Column()
     paymentMethod: string;

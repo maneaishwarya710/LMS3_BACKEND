@@ -31,7 +31,7 @@ export class Quiz {
     @OneToMany(() => Result, (result) => result.quiz, {cascade:true})
     results: Result[];
 
-    @OneToMany(()=>Question, (questions)=>questions.quiz)
+    @OneToMany(()=>Question, (questions)=>questions.quiz, {cascade:true, eager:true})
     questions:Question[];
 
     @OneToMany(()=>QuizAttempt, (attempts)=>attempts.quiz)

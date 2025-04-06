@@ -36,29 +36,41 @@ export class StudentService {
             userId: savedEnroll.user.userId
         };
     }
-
-    static async getEnrolledCourses(userId: number): Promise<CourseDTO[]> {
+    static async getEnrolledCourses(userId: number): Promise<Course[]> {
         const enrollments = await EnrollmentRepository.find({
             where: { user: { userId } },
             relations: ['course']
         });
-
+    
         if (!enrollments || enrollments.length === 0) {
-            throw new Error("No courses found for the enrolled student");
+            throw new Error("No enrollments found for the user");
         }
-
-        return enrollments.map(enrollment => {
-            const course = enrollment.course;
-            const courseDTO = new CourseDTO();
-            courseDTO.courseId = course.courseId;
-            courseDTO.creatorId = course.user.userId; // Assuming creatorId is part of the course entity
-            courseDTO.courseName = course.courseName;
-            courseDTO.description = course.description;
-            courseDTO.price = course.price;
-            courseDTO.imgurl = course.imgurl;
-            return courseDTO;
-        });
+    
+        return enrollments.map(enrollment => enrollment.course);
     }
+    
+    // static async getEnrolledCourses(userId: number): Promise<CourseDTO[]> {
+    //     const enrollments = await EnrollmentRepository.find({
+    //         where: { user: { userId } },
+    //         relations: ['course']
+    //     });
+
+    //     if (!enrollments || enrollments.length === 0) {
+    //         throw new Error("No courses found for the enrolled student");
+    //     }
+
+    //     return enrollments.map(enrollment => {
+    //         const course = enrollment.course;
+    //         const courseDTO = new CourseDTO();
+    //         courseDTO.courseId = course.courseId;
+    //         courseDTO.creatorId = course.user.userId; // Assuming creatorId is part of the course entity
+    //         courseDTO.courseName = course.courseName;
+    //         courseDTO.description = course.description;
+    //         courseDTO.price = course.price;
+    //         courseDTO.imgurl = course.imgurl;
+    //         return courseDTO;
+    //     });
+    // }
 
     static async getStudentResults(userId: number): Promise<ResultDTO[]> {
         

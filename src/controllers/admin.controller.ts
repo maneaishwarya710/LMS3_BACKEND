@@ -12,15 +12,16 @@ export class AdminController {
         }
     }
 
-    static async deleteUserById(req: Request, res: Response) {
+    static async deleteUserByUsername(req: Request, res: Response) {
         try {
-            const userId = Number(req.params.id);
-            await AdminService.deleteUserById(userId);
+            const username = req.params.username;
+            await AdminService.deleteUserByUsername(username);
             res.status(201).json({ message: "User deleted successfully!" });
         } catch (error) {
             res.status(400).json({ error: "Unable to delete user!" });
         }
     }
+    
 
     static async addUser(req: Request, res: Response) {
         const dto = new UserDTO();

@@ -22,7 +22,7 @@ correctOptionId: number;
 @JoinColumn({ name: "quizId" })
 quiz: Quiz;
 
-@OneToMany(()=>Option, (option)=>option.question)
+@OneToMany(()=>Option, (option)=>option.question, {cascade:true, eager:true})
 options:Option[];
 
 @OneToMany(()=>Answer, (answers)=>answers.question)
