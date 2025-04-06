@@ -28,6 +28,10 @@ __decorate([
     __metadata("design:type", String)
 ], Option.prototype, "optionText", void 0);
 __decorate([
+    (0, typeorm_1.Column)({ default: false }),
+    __metadata("design:type", Boolean)
+], Option.prototype, "isCorrect", void 0);
+__decorate([
     (0, typeorm_1.ManyToOne)(() => question_1.Question, (question) => question.options),
     (0, typeorm_1.JoinColumn)({ name: "questionId" }),
     __metadata("design:type", question_1.Question)

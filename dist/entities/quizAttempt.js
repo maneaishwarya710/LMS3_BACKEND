@@ -34,7 +34,7 @@ __decorate([
     __metadata("design:type", Number)
 ], QuizAttempt.prototype, "score", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ type: 'datetime', default: () => 'GETDATE()' }),
     __metadata("design:type", Date)
 ], QuizAttempt.prototype, "attemptDate", void 0);
 __decorate([

@@ -14,7 +14,8 @@ const quiz_routes_1 = __importDefault(require("./routes/quiz.routes"));
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use((0, cors_1.default)({
-    origin: "*",
+    origin: "http://localhost:4200", //or '*' 
+    credentials: true,
     allowedHeaders: "*"
 }));
 app.use('/user', user_routes_1.default);

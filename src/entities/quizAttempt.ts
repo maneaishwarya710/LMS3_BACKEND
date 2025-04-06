@@ -17,7 +17,7 @@ quizId: number;
 
 @Column({ type: 'float', default: 0 })
 score: number;
-@Column()
+@Column({type:'datetime', default:()=>'GETDATE()'})
 attemptDate: Date;
 @ManyToOne(() => User, (user) => user.quizAttempts)
 @JoinColumn({ name: "userId" })

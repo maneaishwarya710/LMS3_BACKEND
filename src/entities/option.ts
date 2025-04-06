@@ -9,6 +9,10 @@ optionId: number;
 questionId: number;
 @Column()
 optionText: string;
+
+@Column({default:false})
+isCorrect:boolean;
+
 @ManyToOne(() => Question, (question) => question.options)
 @JoinColumn({ name: "questionId" })
 question: Question;
