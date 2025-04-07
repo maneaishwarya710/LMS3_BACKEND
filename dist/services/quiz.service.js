@@ -15,60 +15,43 @@ const quiz_repository_1 = require("../repositories/quiz.repository");
 const result_repository_1 = require("../repositories/result.repository");
 const quizAttempt_repository_1 = require("../repositories/quizAttempt.repository");
 const option_repository_1 = require("../repositories/option.repository");
+const course_repository_1 = require("../repositories/course.repository");
 class QuizService {
-    // async createQuiz(quizData: Partial<Quiz>, questions: any[]): Promise<Quiz> {
-    //   const course = await courseRepository.findOne({ where: { courseId: quizData.course?.courseId } });
-    //   if (!course) {
-    //     throw new Error('Course not found');
-    //   }
-    //   const quiz = QuizRepository.create({
-    //     quizName: quizData.quizName,
-    //     description: quizData.description,
-    //     totalmarks: quizData.totalmarks,
-    //     course: course // ✅ Set course relation properly
-    //   });
-    //   const savedQuiz = await QuizRepository.save(quiz);
-    //   for (const q of questions) {
-    //     const question = questionRepository.create({
-    //       questionText: q.questionText,
-    //       correctOptionId: q.correctOptionId,
-    //       quiz: savedQuiz
-    //     });
-    //     console.log("--------------------------------------------createQuiz Service Questions:", question);
-    //     const savedQuestion = await questionRepository.save(question);
-    //     for (const opt of q.options) {
-    //       const option = optionRepository.create({
-    //         optionText: opt.optionText,
-    //         question: savedQuestion
-    //       });
-    //       console.log("-------------------------------------------------------createQuiz Service Questions:", option);
-    //       await optionRepository.save(option);
-    //     }
-    //   }
-    //   return savedQuiz;
-    // }
     createQuiz(quizData, questions) {
         return __awaiter(this, void 0, void 0, function* () {
-            const quiz = quiz_repository_1.QuizRepository.create(quizData);
+            var _a;
+            // Fetch the course entity
+            const course = yield course_repository_1.courseRepository.findOne({ where: { courseId: (_a = quizData.course) === null || _a === void 0 ? void 0 : _a.courseId } });
+            if (!course) {
+                throw new Error('Course not found');
+            }
+            // Create and save the quiz
+            const quiz = quiz_repository_1.QuizRepository.create({
+                quizName: quizData.quizName,
+                description: quizData.description,
+                totalmarks: quizData.totalmarks,
+                course: course, // Set the course relation
+            });
             const savedQuiz = yield quiz_repository_1.QuizRepository.save(quiz);
+            // Save questions and options
             for (const q of questions) {
                 const question = question_repository_1.questionRepository.create({
-                    quizId: savedQuiz.quizId,
                     questionText: q.questionText,
-                    correctOptionId: 0, // temp
+                    quiz: savedQuiz, // Set the quiz relation
                 });
                 const savedQuestion = yield question_repository_1.questionRepository.save(question);
                 const savedOptions = [];
                 for (const opt of q.options) {
                     const option = option_repository_1.optionRepository.create({
-                        questionId: savedQuestion.questionId,
                         optionText: opt.optionText,
+                        isCorrect: opt.isCorrect, // Set the correct flag
+                        question: savedQuestion, // Set the question relation
                     });
                     const savedOption = yield option_repository_1.optionRepository.save(option);
                     savedOptions.push(savedOption);
                 }
-                // Update correctOptionId after options are saved
-                const correctOption = savedOptions.find(o => o.optionText === q.correctAnswer);
+                // Update correctOptionId after saving options
+                const correctOption = savedOptions.find(o => o.isCorrect);
                 if (correctOption) {
                     savedQuestion.correctOptionId = correctOption.optionId;
                     yield question_repository_1.questionRepository.save(savedQuestion);
@@ -77,24 +60,52 @@ class QuizService {
             return savedQuiz;
         });
     }
-    // async getQuizByCourseId(courseId: number): Promise<Quiz[]> {
-    //   return await QuizRepository.find({
-    //     where: { course: { courseId:courseId }},
-    //     relations: ['questions', 'questions.options'],
-    //   });
+    // async createQuiz(quizData: Partial<Quiz>, questions: any[]): Promise<Quiz> {
+    //   const quiz = QuizRepository.create(quizData);
+    //   const savedQuiz = await QuizRepository.save(quiz);
+    //   for (const q of questions) {
+    //     const question = questionRepository.create({
+    //       quizId: savedQuiz.quizId,
+    //       questionText: q.questionText,
+    //       correctOptionId: 0, // temp
+    //     });
+    //     const savedQuestion = await questionRepository.save(question);
+    //     const savedOptions = [];
+    //     for (const opt of q.options) {
+    //       const option = optionRepository.create({
+    //         questionId: savedQuestion.questionId,
+    //         optionText: opt.optionText,
+    //       });
+    //       const savedOption = await optionRepository.save(option);
+    //       savedOptions.push(savedOption);
+    //     }
+    //     // Update correctOptionId after options are saved
+    //     const correctOption = savedOptions.find(o => o.optionText === q.correctAnswer);
+    //     if (correctOption) {
+    //       savedQuestion.correctOptionId = correctOption.optionId;
+    //       await questionRepository.save(savedQuestion);
+    //     }
+    //   }
+    //   return savedQuiz;
     // }
     getQuizByCourseId(courseId) {
         return __awaiter(this, void 0, void 0, function* () {
-            return quiz_repository_1.QuizRepository.find({
-                where: { course: { courseId: courseId } },
-                relations: {
-                    questions: {
-                        options: true
-                    }
-                }
+            return yield quiz_repository_1.QuizRepository.find({
+                where: { course: { courseId } },
+                relations: ['questions', 'questions.options'], // Load questions and their options
             });
         });
     }
+    // async getQuizByCourseId(courseId: number): Promise<Quiz[]> {
+    //   return QuizRepository.find({
+    //     where: { course: { courseId: courseId } },
+    //     relations: {
+    //       questions: {
+    //         options: true
+    //       }
+    //     }
+    //   });
+    // }
     submitQuiz(attemptData, answers) {
         return __awaiter(this, void 0, void 0, function* () {
             const { userId, quizId } = attemptData;

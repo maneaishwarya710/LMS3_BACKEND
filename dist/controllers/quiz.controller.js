@@ -15,9 +15,12 @@ const quizService = new quiz_service_1.QuizService();
 const createQuiz = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { quizData, questions } = req.body;
-        // const savedQuiz=await quizService.createQuiz(quizData, questions);
+        // Validate input
+        if (!quizData || !questions || !Array.isArray(questions)) {
+            res.status(400).json({ message: 'Invalid input: quizData and questions are required' });
+        }
         const quiz = yield quizService.createQuiz(quizData, questions);
-        console.log("In create quiz controller:", quizData);
+        console.log("In createQuiz controller:", quiz);
         res.status(201).json(quiz);
     }
     catch (error) {
@@ -29,11 +32,16 @@ exports.createQuiz = createQuiz;
 const getQuizByCourseId = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const courseId = Number(req.params.courseId);
+        // Validate courseId
+        if (isNaN(courseId)) {
+            res.status(400).json({ message: 'Invalid courseId parameter' });
+        }
         const quizzes = yield quizService.getQuizByCourseId(courseId);
-        console.log("In getQuizByCourseId controller", quizzes);
+        console.log("In getQuizByCourseId controller:", quizzes);
         res.status(200).json(quizzes);
     }
     catch (error) {
+        console.error(`Error retrieving quizzes for courseId ${req.params.courseId}:`, error);
         res.status(500).json({ message: 'Error retrieving quizzes', error });
     }
 });

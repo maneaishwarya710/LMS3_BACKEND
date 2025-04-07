@@ -9,6 +9,7 @@ import { PaymentRepository } from "../repositories/payment.repository";
 import { PaymentDTO } from "../dto/payment.dto";
 import { EnrollmentRepository } from "../repositories/enrollment.repository";
 import { Enrollment } from "../entities/enrollment";
+import { AppError } from "../utils/appError";
 
 dotenv.config();
 
@@ -21,6 +22,9 @@ export class AdminService {
             password: user.password,
             userType: user.userType
         }));
+        if(!userDTOs){
+            throw new AppError("No users found", 404)
+        }
         return userDTOs;
     }
 

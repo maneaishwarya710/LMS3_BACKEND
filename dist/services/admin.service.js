@@ -19,6 +19,7 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const payment_repository_1 = require("../repositories/payment.repository");
 const enrollment_repository_1 = require("../repositories/enrollment.repository");
+const appError_1 = require("../utils/appError");
 dotenv_1.default.config();
 class AdminService {
     static viewAllUsers() {
@@ -30,6 +31,9 @@ class AdminService {
                 password: user.password,
                 userType: user.userType
             }));
+            if (!userDTOs) {
+                throw new appError_1.AppError("No users found", 404);
+            }
             return userDTOs;
         });
     }

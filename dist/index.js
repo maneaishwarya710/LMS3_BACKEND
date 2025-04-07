@@ -12,6 +12,7 @@ const tutor_routes_1 = __importDefault(require("./routes/tutor.routes"));
 const student_routes_1 = __importDefault(require("./routes/student.routes"));
 const quiz_routes_1 = __importDefault(require("./routes/quiz.routes"));
 const course_routes_1 = __importDefault(require("./routes/course.routes"));
+const error_middlewarw_1 = require("./middleware/error.middlewarw");
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use((0, cors_1.default)({
@@ -25,6 +26,7 @@ app.use('/tutor', tutor_routes_1.default);
 app.use('/student', student_routes_1.default);
 app.use('/quiz', quiz_routes_1.default);
 app.use('/course', course_routes_1.default);
+app.use(error_middlewarw_1.errorMiddleware);
 const PORT = 3004;
 data_source_1.AppDataSource.initialize().then(() => {
     app.listen(PORT, () => {

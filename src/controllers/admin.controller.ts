@@ -8,7 +8,7 @@ export class AdminController {
             const users = await AdminService.viewAllUsers();
             res.status(201).json({ message: "Users:", users });
         } catch (error) {
-            res.status(400).json({ error: "Unable to view users!" });
+            throw error;
         }
     }
 
