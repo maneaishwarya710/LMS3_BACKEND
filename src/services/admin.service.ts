@@ -84,4 +84,36 @@ export class AdminService {
         
         return enrollmentDTOs;
     }
+
+    static async getStudentsWithEnrollments(): Promise<any[]> {
+        const students = await UserRepository
+            .createQueryBuilder("user")
+            .leftJoinAndSelect("user.enrollments", "enrollment")
+            .where("user.userType = :userType", { userType: "student" })
+            .select([
+                "user.username AS username",
+                "user.email AS email",
+                "COUNT(enrollment.enrollmentId) AS enrollmentCount"
+            ])
+            .groupBy("user.userId, user.username, user.email") // Include all selected columns in GROUP BY
+            .getRawMany();
+    
+        return students;
+    }
+
+    static async getTeachersWithCourses(): Promise<any[]> {
+        const teachers = await UserRepository
+            .createQueryBuilder("user")
+            .leftJoinAndSelect("user.course", "course")
+            .where("user.userType = :userType", { userType: "tutor" })
+            .select([
+                "user.username AS username",
+                "user.email AS email",
+                "COUNT(course.courseId) AS courseCount"
+            ])
+            .groupBy("user.userId, user.username, user.email") // Include all selected columns in GROUP BY
+            .getRawMany();
+    
+        return teachers;
+    }
 }

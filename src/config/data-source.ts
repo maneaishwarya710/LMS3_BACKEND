@@ -24,7 +24,7 @@ export const AppDataSource=new DataSource({
     database:process.env.DB_NAME,
     entities:[User, Course, Quiz, CourseContent, Enrollment, Payment, Result, Answer, Option, Question, QuizAttempt],
     synchronize:false,
-    logging:true,
+    logging: ["query", "error"],
     options:{
         trustServerCertificate:true
     }

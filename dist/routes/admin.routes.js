@@ -12,4 +12,6 @@ adminRouter.delete('/delete/:username', auth_middleware_1.authenticateUser, (0, 
 adminRouter.post('/add', auth_middleware_1.authenticateUser, (0, auth_middleware_1.roleBasedAccess)(['admin', 'Admin']), admin_controller_1.AdminController.addUser);
 adminRouter.get('/paymentlist', auth_middleware_1.authenticateUser, (0, auth_middleware_1.roleBasedAccess)(['admin', 'Admin']), admin_controller_1.AdminController.checkPaymentList);
 adminRouter.get('/enrolls', auth_middleware_1.authenticateUser, (0, auth_middleware_1.roleBasedAccess)(['admin', 'Admin']), admin_controller_1.AdminController.checkEnrollmentList);
+adminRouter.get("/students-enrollments", admin_controller_1.AdminController.getStudentsWithEnrollments);
+adminRouter.get("/teachers-courses", admin_controller_1.AdminController.getTeachersWithCourses);
 exports.default = adminRouter;

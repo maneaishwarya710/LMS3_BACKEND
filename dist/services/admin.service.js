@@ -93,5 +93,37 @@ class AdminService {
             return enrollmentDTOs;
         });
     }
+    static getStudentsWithEnrollments() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const students = yield user_repository_1.UserRepository
+                .createQueryBuilder("user")
+                .leftJoinAndSelect("user.enrollments", "enrollment")
+                .where("user.userType = :userType", { userType: "student" })
+                .select([
+                "user.username AS username",
+                "user.email AS email",
+                "COUNT(enrollment.enrollmentId) AS enrollmentCount"
+            ])
+                .groupBy("user.userId, user.username, user.email") // Include all selected columns in GROUP BY
+                .getRawMany();
+            return students;
+        });
+    }
+    static getTeachersWithCourses() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const teachers = yield user_repository_1.UserRepository
+                .createQueryBuilder("user")
+                .leftJoinAndSelect("user.course", "course")
+                .where("user.userType = :userType", { userType: "tutor" })
+                .select([
+                "user.username AS username",
+                "user.email AS email",
+                "COUNT(course.courseId) AS courseCount"
+            ])
+                .groupBy("user.userId, user.username, user.email") // Include all selected columns in GROUP BY
+                .getRawMany();
+            return teachers;
+        });
+    }
 }
 exports.AdminService = AdminService;

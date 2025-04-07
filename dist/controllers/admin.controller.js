@@ -75,5 +75,28 @@ class AdminController {
             }
         });
     }
+    static getStudentsWithEnrollments(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const students = yield admin_service_1.AdminService.getStudentsWithEnrollments();
+                res.status(200).json({ message: "Students with enrollments:", students });
+            }
+            catch (error) {
+                res.status(400).json({ error: "Unable to fetch students with enrollments!" });
+            }
+        });
+    }
+    static getTeachersWithCourses(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const teachers = yield admin_service_1.AdminService.getTeachersWithCourses();
+                console.log("In get teacher controller:", teachers);
+                res.status(200).json({ message: "Teachers with courses:", teachers });
+            }
+            catch (error) {
+                res.status(400).json({ error: "Unable to fetch teachers with courses!" });
+            }
+        });
+    }
 }
 exports.AdminController = AdminController;

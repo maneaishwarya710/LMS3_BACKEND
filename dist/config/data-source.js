@@ -28,7 +28,7 @@ exports.AppDataSource = new typeorm_1.DataSource({
     database: process.env.DB_NAME,
     entities: [user_1.User, course_1.Course, quiz_1.Quiz, courseContent_1.CourseContent, enrollment_1.Enrollment, payment_1.Payment, result_1.Result, answer_1.Answer, option_1.Option, question_1.Question, quizAttempt_1.QuizAttempt],
     synchronize: false,
-    logging: true,
+    logging: ["query", "error"],
     options: {
         trustServerCertificate: true
     }
