@@ -36,4 +36,6 @@ export class Quiz {
 
     @OneToMany(()=>QuizAttempt, (attempts)=>attempts.quiz)
     attempts:QuizAttempt[];
+
+    
 }

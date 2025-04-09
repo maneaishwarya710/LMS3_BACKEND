@@ -18,6 +18,8 @@ const answer_1 = require("../entities/answer");
 const question_1 = require("../entities/question");
 const quizAttempt_1 = require("../entities/quizAttempt");
 const option_1 = require("../entities/option");
+const discussion_post_entitty_1 = require("../entities/discussion-post.entitty");
+const discussion_rename_entity_1 = require("../entities/discussion-rename.entity");
 dotenv_1.default.config();
 exports.AppDataSource = new typeorm_1.DataSource({
     type: "mssql",
@@ -26,9 +28,9 @@ exports.AppDataSource = new typeorm_1.DataSource({
     password: process.env.DB_PASSWORD,
     host: process.env.DB_HOST,
     database: process.env.DB_NAME,
-    entities: [user_1.User, course_1.Course, quiz_1.Quiz, courseContent_1.CourseContent, enrollment_1.Enrollment, payment_1.Payment, result_1.Result, answer_1.Answer, option_1.Option, question_1.Question, quizAttempt_1.QuizAttempt],
+    entities: [user_1.User, course_1.Course, quiz_1.Quiz, courseContent_1.CourseContent, enrollment_1.Enrollment, payment_1.Payment, result_1.Result, answer_1.Answer, option_1.Option, question_1.Question, quizAttempt_1.QuizAttempt, discussion_post_entitty_1.DiscussionPost, discussion_rename_entity_1.DiscussionReply],
     synchronize: false,
-    logging: ["query", "error"],
+    logging: false,
     options: {
         trustServerCertificate: true
     }

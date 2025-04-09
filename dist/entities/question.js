@@ -30,7 +30,7 @@ __decorate([
     __metadata("design:type", String)
 ], Question.prototype, "questionText", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", Number)
 ], Question.prototype, "correctOptionId", void 0);
 __decorate([

@@ -12,6 +12,8 @@ import { Answer } from "../entities/answer";
 import { Question } from "../entities/question";
 import { QuizAttempt } from "../entities/quizAttempt";
 import { Option } from "../entities/option";
+import { DiscussionPost } from "../entities/discussion-post.entitty";
+import { DiscussionReply } from "../entities/discussion-rename.entity";
 
 dotenv.config();
 
@@ -22,9 +24,9 @@ export const AppDataSource=new DataSource({
     password:process.env.DB_PASSWORD,
     host:process.env.DB_HOST,
     database:process.env.DB_NAME,
-    entities:[User, Course, Quiz, CourseContent, Enrollment, Payment, Result, Answer, Option, Question, QuizAttempt],
+    entities:[User, Course, Quiz, CourseContent, Enrollment, Payment, Result, Answer, Option, Question, QuizAttempt, DiscussionPost, DiscussionReply],
     synchronize:false,
-    logging: ["query", "error"],
+    logging: false,
     options:{
         trustServerCertificate:true
     }

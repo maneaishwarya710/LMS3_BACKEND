@@ -15,7 +15,7 @@ quizId: number;
 @Column()
 questionText: string;
 
-@Column()
+@Column({nullable:true})
 correctOptionId: number;
 
 @ManyToOne(() => Quiz, (quiz) => quiz.questions)

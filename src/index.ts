@@ -8,6 +8,7 @@ import studentRouter from "./routes/student.routes";
 import quizRouter from "./routes/quiz.routes";
 import courseRouter from "./routes/course.routes";
 import { errorMiddleware } from "./middleware/error.middlewarw";
+import discRouter from "./routes/discussion.routes";
 
 const app=express();
 
@@ -23,6 +24,7 @@ app.use('/tutor', tutorRouter);
 app.use('/student', studentRouter);
 app.use('/quiz', quizRouter);
 app.use('/course', courseRouter);
+app.use('/disc', discRouter);
 
 app.use(errorMiddleware as unknown as express.ErrorRequestHandler);
 

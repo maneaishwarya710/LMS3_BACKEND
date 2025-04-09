@@ -5,6 +5,8 @@ import { Result } from "./result";
 import { Course } from "./course";
 import { Quiz } from "./quiz";
 import { QuizAttempt } from "./quizAttempt";
+import { DiscussionPost } from "./discussion-post.entitty";
+import { DiscussionReply } from "./discussion-rename.entity";
 
 @Entity("USER_LMS")
 export class User {
@@ -41,4 +43,10 @@ export class User {
 
     @OneToMany(()=>QuizAttempt, (quizAttempts)=>quizAttempts.user, {cascade:true})
     quizAttempts:QuizAttempt[];
+
+    @OneToMany(()=>DiscussionPost, (posts)=>posts.user, {cascade:true})
+    posts:DiscussionPost[];
+
+    @OneToMany(()=>DiscussionReply, (replies)=>replies.user, {cascade:true})
+    replies:DiscussionReply[];
 }

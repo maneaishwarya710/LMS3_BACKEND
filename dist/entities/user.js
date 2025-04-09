@@ -16,6 +16,8 @@ const payment_1 = require("./payment");
 const result_1 = require("./result");
 const course_1 = require("./course");
 const quizAttempt_1 = require("./quizAttempt");
+const discussion_post_entitty_1 = require("./discussion-post.entitty");
+const discussion_rename_entity_1 = require("./discussion-rename.entity");
 let User = class User {
 };
 exports.User = User;
@@ -59,6 +61,14 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => quizAttempt_1.QuizAttempt, (quizAttempts) => quizAttempts.user, { cascade: true }),
     __metadata("design:type", Array)
 ], User.prototype, "quizAttempts", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => discussion_post_entitty_1.DiscussionPost, (posts) => posts.user, { cascade: true }),
+    __metadata("design:type", Array)
+], User.prototype, "posts", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => discussion_rename_entity_1.DiscussionReply, (replies) => replies.user, { cascade: true }),
+    __metadata("design:type", Array)
+], User.prototype, "replies", void 0);
 exports.User = User = __decorate([
     (0, typeorm_1.Entity)("USER_LMS")
 ], User);
